@@ -1,8 +1,8 @@
 package com.quiz.bank.api.user.mapper;
 
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
-@Repository
+@Mapper
 public interface UserMapper {
 
 }

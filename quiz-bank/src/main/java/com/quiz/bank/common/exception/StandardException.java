@@ -15,7 +15,7 @@ public class StandardException extends RuntimeException{
 	
 	private String[] args;
 	public StandardException() {
-		ec = ErrorCode.ETC;
+		
 	}
 	
 	public StandardException(ErrorCode ec) {

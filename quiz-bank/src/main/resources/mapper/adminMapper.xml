@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.quiz.bank.api.user.mapper.AdminMapper">
+<mapper namespace="com.quiz.bank.api.admin.mapper.AdminMapper">
 	<insert id="registTestCategory" parameterType="com.quiz.bank.api.admin.vo.TestCategoryParamVO">
 	INSERT INTO test_category
 	(
@@ -41,10 +41,64 @@
 		subject_category_no,
 		subject_category
 	FROM
-		test_category
+		subject_category
 	WHERE
 		used_yn = 1		
 	  AND
 		test_category_no = #{test_category_no}
 	</select>
+	
+	
+	<insert id="registTest" 
+	useGeneratedKeys="true"
+	keyProperty="test_no"
+	parameterType="com.quiz.bank.api.admin.vo.TestParamVO">
+	INSERT INTO
+	test_list
+	(
+		test_category_no,
+		test_year,
+		test_month,
+		test_count,
+		test_passrate,
+		test_time,
+		test_fullscore,
+		used_yn	
+	)
+	VALUES
+	(
+		#{test_category_no},
+		#{test_year},
+		#{test_month},
+		#{test_count},
+		#{test_passrate},
+		#{test_time},
+		#{test_fullscore},
+		1	
+	)
+	</insert>
+	<insert id="registQuizzes" parameterType="String">
+	INSERT INTO 
+	quiz
+	(
+	test_no,
+	test_category_no,
+	subject_category_no,
+	quiz_index,
+	quiz_content,
+	quiz_explation,
+	quiz_type,
+	quiz_point,
+	options,
+	quiz_answer,
+	used_yn
+	)
+	VALUES
+	(
+	#{param1}
+	)	
+	</insert>
+	
+	
+	
 </mapper>
