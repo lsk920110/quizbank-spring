@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.quiz.bank.api.user.mapper.AdminMapper">
+	<insert id="registTestCategory" parameterType="com.quiz.bank.api.admin.vo.TestCategoryParamVO">
+	INSERT INTO test_category
+	(
+		test_category,
+		used_yn
+	)
+	VALUES
+	(
+		#{test_category},
+		1
+	)
+	</insert>
+	<insert id="registSubjectCategoryList" parameterType="com.quiz.bank.api.admin.vo.SubjectCategoryParamVO">
+	INSERT INTO subject_category
+	(
+		test_category_no,
+		subject_category,
+		used_yn
+	)
+	VALUES
+	(
+		#{test_category_no},
+		#{subject_category},
+		1
+	)
+	</insert>
+	<select id="selectTestCategoryList" resultType="com.quiz.bank.api.admin.vo.TestCategoryParamVO">
+	SELECT 
+		test_category_no,
+		test_category		
+	FROM
+		test_category
+	WHERE
+		used_yn = 1		
+	</select>
+	<select id="selectSubjectCategoryList" parameterType="com.quiz.bank.api.admin.vo.SubjectCategoryParamVO" resultType="com.quiz.bank.api.admin.vo.SubjectCategoryParamVO">
+	SELECT 
+		subject_category_no,
+		subject_category
+	FROM
+		test_category
+	WHERE
+		used_yn = 1		
+	  AND
+		test_category_no = #{test_category_no}
+	</select>
+</mapper>
