@@ -98,7 +98,7 @@ public class AdminController extends BaseController {
 		
 		ResultVO rv = adminService.registQuizSolve(param);
 		
-		return rv
+		return rv;
 	}
 	
 	

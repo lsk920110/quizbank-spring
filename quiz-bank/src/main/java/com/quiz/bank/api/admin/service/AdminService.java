@@ -92,7 +92,7 @@ public class AdminService {
 		}
 		my_answer_list = my_answer_list.substring(0,my_answer_list.length()-1);
 		my_answer_list += ")";
-		adminMapper.registQuizzes(my_answer_list);
+		adminMapper.registQuizSolve(my_answer_list);
 		
 		ResultVO rv = new ResultVO();
 		
