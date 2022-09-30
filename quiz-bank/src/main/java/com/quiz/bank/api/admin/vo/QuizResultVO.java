@@ -1,6 +1,8 @@
 package com.quiz.bank.api.admin.vo;
 
-public class QuizParamVO {
+import com.quiz.bank.common.vo.ResultVO;
+
+public class QuizResultVO extends ResultVO{
 
 	private int test_category_no;
 	private int subject_category_no;
@@ -14,6 +16,7 @@ public class QuizParamVO {
 	private String option4;
 	private String option5;
 	private String quiz_answer;
+	
 	public int getTest_category_no() {
 		return test_category_no;
 	}
@@ -86,6 +89,9 @@ public class QuizParamVO {
 	public void setQuiz_answer(String quiz_answer) {
 		this.quiz_answer = quiz_answer;
 	}
+	
+
+	
 	
 	
 	

@@ -1,10 +1,140 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.rtl.min.css" integrity="sha384-OXTEbYDqaX2ZY/BOaZV/yFGChYHtrXH2nyXJ372n2Y8abBhrqacCEe+3qhSHtLjy" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<style>
+#all{
+	width : 500px;
+}
+</style>
 <body>
-aaaa
+<div id="all">
+	<div class="input-group mb-3">
+	  <input id="testCategory" type="text" class="form-control" placeholder="시험종류" aria-label="Recipient's username" aria-describedby="button-addon2">
+	  <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+	  onclick="registTestCategory()">시험저장</button>
+	</div>
+	<script>
+	const registTestCategory=()=>{
+		let testCategory = $('#testCategory').val();
+		$.ajax({
+			url :'regist/testCategory',
+			data : JSON.stringify({test_category:testCategory}),
+			method : 'POST',
+			dataType : 'json',
+			contentType : 'application/json',
+			success : (data)=>{
+				console.log(data);
+				let txt = `<option value=${data.test_category_no}>${data.test_category}</option>`;
+				$('#test_category_select').append(txt);
+			}
+			
+			
+		});
+	}
+	</script>
+	
+	<select id="test_category_select" onchange="test_category_change(this)" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+	  <option selected>Open this select menu</option>
+	  <option value="1">One</option>
+	  <option value="2">Two</option>
+	  <option value="3">Three</option>
+	</select>
+	<div class="input-group mb-3">
+	  <input id="subjectCategory" type="text" class="form-control" placeholder="과목종류" aria-label="Recipient's username" aria-describedby="button-addon2">
+	  <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+    onclick="registSubjectCategory()"
+    >과목저장</button>
+	</div>
+	<script>
+	const registSubjectCategory=()=>{
+		let testCategoryNo = $('#test_category_select').val();
+		let subjectCategoryNo = $('#subjectCategory').val();
+		
+		$.ajax({
+			url :'regist/subjectCategory',
+			data : JSON.stringify({
+				test_category_no:testCategoryNo,
+				subject_category:subjectCategoryNo
+			}),
+			method : 'POST',
+			dataType : 'json',
+			contentType : 'application/json',
+			success : (data)=>{
+				console.log(data);
+				let txt = `<option value=${data.subject_category_no}>${data.subject_category}</option>`;
+				$('#subject_category_select').append(txt);
+			}
+			
+			
+		});
+	}
+	</script>
+	<select id="subject_category_select" class="form-select form-select-sm" aria-label=".form-select-sm example">
+	  <option selected>Open this select menu</option>
+	  <option value="1">One</option>
+	  <option value="2">Two</option>
+	  <option value="3">Three</option>
+	</select>
+</div>
+
+
 </body>
+<script>
+const test_category_list=()=>{
+	$.ajax({
+		
+		url : 'read/testCategoryList',
+		dataType : 'json',
+		method : 'GET',
+		//data : '',
+		success : (data)=>{
+			testCategoryListDraw(data.test_category_list);
+		},
+		error : (e)=>{console.log(e)}
+		
+	});	
+}
+test_category_list();
+
+const test_category_change=(e)=>{
+	$.ajax({
+		url : `read/subjectCategoryList/${e.value}`,
+		method : 'GET',
+		success : (data)=>{subjectCategoryListDraw(data.subject_category_list)},
+		error : (e)=>console.log(e)
+	});
+
+}
+
+const testCategoryListDraw=(tcl)=>{
+	let txt = '';
+	tcl.forEach((item,idx)=>{
+		txt += `<option value="${item.test_category_no}">${item.test_category}</option>`;
+	});
+	$('#test_category_select').empty();
+	$('#test_category_select').append(txt);
+}
+
+const subjectCategoryListDraw=(scl)=>{
+	let txt = '';
+	scl.forEach((item,idx)=>{
+		txt += `<option value="${item.subject_category_no}">${item.subject_category}</option>`;
+	});
+	$('#subject_category_select').empty();
+	$('#subject_category_select').append(txt);	
+}
+
+
+
+</script>
+
+
+
+
+
 </html>

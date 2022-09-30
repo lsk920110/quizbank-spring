@@ -1,18 +1,11 @@
 package com.quiz.bank.api.admin.vo;
 
-public class SubjectCategoryParamVO {
+import com.quiz.bank.common.vo.ResultVO;
 
+public class RegistSubjectResultVO extends ResultVO{
 
-	private int test_category_no;
 	private int subject_category_no;
 	private String subject_category;
-	private boolean used_yn;
-	public int getTest_category_no() {
-		return test_category_no;
-	}
-	public void setTest_category_no(int test_category_no) {
-		this.test_category_no = test_category_no;
-	}
 	public int getSubject_category_no() {
 		return subject_category_no;
 	}
@@ -25,13 +18,7 @@ public class SubjectCategoryParamVO {
 	public void setSubject_category(String subject_category) {
 		this.subject_category = subject_category;
 	}
-	public boolean isUsed_yn() {
-		return used_yn;
-	}
-	public void setUsed_yn(boolean used_yn) {
-		this.used_yn = used_yn;
-	}
 	
 	
-		
+	
 }

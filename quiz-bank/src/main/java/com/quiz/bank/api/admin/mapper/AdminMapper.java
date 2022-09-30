@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.quiz.bank.api.admin.vo.QuizParamVO;
+import com.quiz.bank.api.admin.vo.QuizResultVO;
+import com.quiz.bank.api.admin.vo.QuizSolveParamVO;
 import com.quiz.bank.api.admin.vo.SubjectCategoryParamVO;
 import com.quiz.bank.api.admin.vo.TestCategoryParamVO;
 import com.quiz.bank.api.admin.vo.TestParamVO;
@@ -16,12 +18,19 @@ public interface AdminMapper {
 
 	void registSubjectCategoryList(SubjectCategoryParamVO param);
 
-	List<TestCategoryParamVO> selectTestCategoryList();
+	List<TestCategoryParamVO> readTestCategoryList();
 
-	List<SubjectCategoryParamVO> selectSubjectCategoryList(SubjectCategoryParamVO param);
+	List<SubjectCategoryParamVO> readSubjectCategoryList(int param);
 
 	void registTest(TestParamVO param);
 
-	void registQuizzes(String my_answer_list);
+	void registQuiz(QuizParamVO quizParamVO);
+
+
+	String readAnswer(int quiz_no);
+
+	void registQuizSolve(QuizSolveParamVO param);
+
+	QuizResultVO readQuiz(int param);
 
 }

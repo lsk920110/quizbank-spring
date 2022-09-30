@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.quiz.bank.api.admin.mapper.AdminMapper">
-	<insert id="registTestCategory" parameterType="com.quiz.bank.api.admin.vo.TestCategoryParamVO">
+	<insert id="registTestCategory" 
+	useGeneratedKeys="true"
+	keyProperty="test_category_no"
+	parameterType="com.quiz.bank.api.admin.vo.TestCategoryParamVO">
 	INSERT INTO test_category
 	(
 		test_category,
@@ -10,10 +13,13 @@
 	VALUES
 	(
 		#{test_category},
-		1
+		true
 	)
 	</insert>
-	<insert id="registSubjectCategoryList" parameterType="com.quiz.bank.api.admin.vo.SubjectCategoryParamVO">
+	<insert id="registSubjectCategoryList" 
+	useGeneratedKeys="true"
+	keyProperty="subject_category_no"	
+	parameterType="com.quiz.bank.api.admin.vo.SubjectCategoryParamVO">
 	INSERT INTO subject_category
 	(
 		test_category_no,
@@ -24,26 +30,26 @@
 	(
 		#{test_category_no},
 		#{subject_category},
-		1
+		true
 	)
 	</insert>
-	<select id="selectTestCategoryList" resultType="com.quiz.bank.api.admin.vo.TestCategoryParamVO">
+	<select id="readTestCategoryList" resultType="com.quiz.bank.api.admin.vo.TestCategoryParamVO">
 	SELECT 
 		test_category_no,
 		test_category		
 	FROM
 		test_category
 	WHERE
-		used_yn = 1		
+		used_yn = true
 	</select>
-	<select id="selectSubjectCategoryList" parameterType="com.quiz.bank.api.admin.vo.SubjectCategoryParamVO" resultType="com.quiz.bank.api.admin.vo.SubjectCategoryParamVO">
+	<select id="readSubjectCategoryList" parameterType="int" resultType="com.quiz.bank.api.admin.vo.SubjectCategoryParamVO">
 	SELECT 
 		subject_category_no,
 		subject_category
 	FROM
 		subject_category
 	WHERE
-		used_yn = 1		
+		used_yn = true
 	  AND
 		test_category_no = #{test_category_no}
 	</select>
@@ -74,32 +80,86 @@
 		#{test_passrate},
 		#{test_time},
 		#{test_fullscore},
-		1	
+		true
 	)
 	</insert>
 	
-	<insert id="registQuizzes" parameterType="String">
+	<insert id="registQuiz" parameterType="com.quiz.bank.api.admin.vo.QuizParamVO">
 	INSERT INTO 
 	quiz
 	(
-	test_no,
 	test_category_no,
 	subject_category_no,
-	quiz_index,
 	quiz_content,
 	quiz_explation,
 	quiz_type,
 	quiz_point,
-	options,
+	option1,
+	option2,
+	option3,
+	option4,
+	option5,
 	quiz_answer,
 	used_yn
 	)
 	VALUES
 	(
-	#{param1}
+	#{test_category_no},
+	#{subject_category_no},
+	#{quiz_content},
+	#{quiz_explation},
+	#{quiz_type},
+	#{quiz_point},
+	#{option1},
+	#{option2},
+	#{option3},
+	#{option4},
+	#{option5},
+	#{quiz_answer},
+	true
 	)	
 	</insert>
+	<select id="readAnswer" parameterType="int" resultType="String">
+	SELECT 
+		quiz_answer
+	FROM
+		quiz
+	WHERE
+		quiz_no = #{quiz_no}	
+	</select>
 	
+	<insert id="registQuizSolve" parameterType="com.quiz.bank.api.admin.vo.QuizSolveParamVO">
+	INSERT INTO quiz_solve
+	(
+	quiz_no,
+	solve_dt,
+	correct_wrong	
+	)
+	VALUES
+	(
+	#{quiz_no},
+	now(),
+	#{correct_wrong}
+	)
+	</insert>
 	
+	<select id="readQuiz" parameterType="int" resultType="com.quiz.bank.api.admin.vo.QuizResultVO">
+	SELECT
+		test_category_no,
+		subject_category_no,
+		quiz_content,
+		quiz_explation,
+		quiz_type,
+		quiz_point,
+		option1,
+		option2,
+		option3,
+		option4,
+		option5
+	FROM
+		quiz
+	WHERE
+		quiz_no = #{quiz_no}
+	</select>
 	
 </mapper>

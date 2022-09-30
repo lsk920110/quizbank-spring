@@ -3,6 +3,7 @@ package com.quiz.bank.api.admin.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,24 +55,25 @@ public class AdminController extends BaseController {
 		return rv;
 	}
 	
-	@GetMapping(value="select/testCategoryList")
+	@GetMapping(value="read/testCategoryList")
 	@ResponseBody
 	public ResultVO selectTestCategoryList() {
 		
-		ResultVO rv = adminService.selectTestCategoryList();
+		ResultVO rv = adminService.readTestCategoryList();
 		
 		return rv;
 	}
 	
-	@GetMapping(value="select/subjectCategoryList")
+	@GetMapping(value="read/subjectCategoryList/{test_category_no}")
 	@ResponseBody
-	public ResultVO selectSubjectCategoryList(@RequestBody SubjectCategoryParamVO param) {
+	public ResultVO selectSubjectCategoryList(@PathVariable("test_category_no") int param ) {
 		
-		ResultVO rv = adminService.selectSubjectCategoryList(param);
+		ResultVO rv = adminService.readSubjectCategoryList(param);
 		
 		return rv;
 	}
 	
+	@Deprecated
 	@PostMapping(value="regist/test")
 	@ResponseBody
 	public ResultVO registTest(@RequestBody TestParamVO param) {
@@ -82,19 +84,17 @@ public class AdminController extends BaseController {
 	}
 	
 	
-	@PostMapping(value="regist/quizzes")
+	@PostMapping(value="regist/quiz")
 	@ResponseBody
-	public ResultVO registQuizzes(@RequestBody QuizParamVO[] param) {
-		for (QuizParamVO quizParamVO : param) {
-			logger.info("param content : {}",quizParamVO.getQuiz_content());
-		}
-		ResultVO rv = adminService.registQuizzes(param);
+	public ResultVO registQuizzes(@RequestBody QuizParamVO param) {
+
+		ResultVO rv = adminService.registQuiz(param);
 		return rv;
 	}
 	
 	@PostMapping(value="regist/quiz/solve")
 	@ResponseBody
-	public ResultVO registQuizSolve(@RequestBody QuizSolveParamVO[] param) {
+	public ResultVO registQuizSolve(@RequestBody QuizSolveParamVO param) {
 		
 		ResultVO rv = adminService.registQuizSolve(param);
 		
@@ -102,5 +102,13 @@ public class AdminController extends BaseController {
 	}
 	
 	
+	@GetMapping(value="read/quiz/{quiz_no}")
+	@ResponseBody
+	public ResultVO readQuiz(@PathVariable("quiz_no") int param) {
+		
+		ResultVO rv = adminService.readQuiz(param);
+		
+		return rv;
+	}
 	
 }

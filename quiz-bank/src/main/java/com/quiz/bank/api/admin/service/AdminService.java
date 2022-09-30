@@ -7,7 +7,11 @@ import org.springframework.stereotype.Service;
 
 import com.quiz.bank.api.admin.mapper.AdminMapper;
 import com.quiz.bank.api.admin.vo.QuizParamVO;
+import com.quiz.bank.api.admin.vo.QuizResultVO;
 import com.quiz.bank.api.admin.vo.QuizSolveParamVO;
+import com.quiz.bank.api.admin.vo.QuizSolveResultVO;
+import com.quiz.bank.api.admin.vo.RegistCategoryResultVO;
+import com.quiz.bank.api.admin.vo.RegistSubjectResultVO;
 import com.quiz.bank.api.admin.vo.SubjectCategoryListResultVO;
 import com.quiz.bank.api.admin.vo.SubjectCategoryParamVO;
 import com.quiz.bank.api.admin.vo.TestCategoryListResultVO;
@@ -24,7 +28,11 @@ public class AdminService {
 	
 	public ResultVO registTestCategory(TestCategoryParamVO param) {
 		adminMapper.registTestCategory(param);
-		ResultVO rv = selectTestCategoryList();
+		//ResultVO rv = readTestCategoryList();
+		RegistCategoryResultVO rv = new RegistCategoryResultVO();
+		
+		rv.setTest_category(param.getTest_category());
+		rv.setTest_category_no(param.getTest_category_no());
 		rv.setErrorCode(ErrorCode.SUCCESS.getCode());
 		rv.setErrorMessage(ErrorCode.SUCCESS.getKey());
 		return rv;
@@ -32,14 +40,16 @@ public class AdminService {
 	
 	public ResultVO registSubjectCategory(SubjectCategoryParamVO param) {
 		adminMapper.registSubjectCategoryList(param);
-		ResultVO rv = selectSubjectCategoryList(param);
+		RegistSubjectResultVO rv = new RegistSubjectResultVO();
+		rv.setSubject_category(param.getSubject_category());
+		rv.setSubject_category_no(param.getSubject_category_no());
 		rv.setErrorCode(ErrorCode.SUCCESS.getCode());
 		rv.setErrorMessage(ErrorCode.SUCCESS.getKey());
 		return rv;
 	}
 	
-	public ResultVO selectTestCategoryList() {
-		List<TestCategoryParamVO> list = adminMapper.selectTestCategoryList();
+	public ResultVO readTestCategoryList() {
+		List<TestCategoryParamVO> list = adminMapper.readTestCategoryList();
 		TestCategoryListResultVO rv = new TestCategoryListResultVO();
 		rv.setTest_category_list(list);
 		rv.setErrorCode(ErrorCode.SUCCESS.getCode());
@@ -47,17 +57,18 @@ public class AdminService {
 		return rv;
 	}
 	
-	public ResultVO selectSubjectCategoryList(SubjectCategoryParamVO param) {
-		List<SubjectCategoryParamVO> list = adminMapper.selectSubjectCategoryList(param);
+	public ResultVO readSubjectCategoryList(int param) {
+		List<SubjectCategoryParamVO> list = adminMapper.readSubjectCategoryList(param);
 		SubjectCategoryListResultVO rv = new SubjectCategoryListResultVO();
 
-		rv.setTest_category_no(param.getTest_category_no());
+		rv.setTest_category_no(param);
 		rv.setSubject_category_list(list);
 		rv.setErrorCode(ErrorCode.SUCCESS.getCode());
 		rv.setErrorMessage(ErrorCode.SUCCESS.getKey());
 		return rv;
 	}
 
+	@Deprecated
 	public ResultVO registTest(TestParamVO param) {
 
 		adminMapper.registTest(param);
@@ -69,33 +80,38 @@ public class AdminService {
 		return rv;
 	}
 
-	public ResultVO registQuizzes(QuizParamVO[] param) {
+	public ResultVO registQuiz(QuizParamVO param) {
 
-		for (QuizParamVO quizParamVO : param) {
-			adminMapper.registQuizzes(quizParamVO);
-		}
+		adminMapper.registQuiz(param);
+
 		
 		ResultVO rv = new ResultVO();
-		
+		rv.setErrorCode(ErrorCode.SUCCESS.getCode());
+		rv.setErrorMessage(ErrorCode.SUCCESS.getKey());		
 		
 		return rv;
 	}
 
-	public ResultVO registQuizSolve(QuizSolveParamVO[] param) {
+	public ResultVO registQuizSolve(QuizSolveParamVO param) {
 
+		String answer = adminMapper.readAnswer(param.getQuiz_no());
+		boolean correct = param.getMy_answer().equals(answer) ? true : false;
+		param.setCorrect_wrong(correct);
+		adminMapper.registQuizSolve(param);
 		
-		//1.답 조회 할 배열 스트링 만들기
-		String my_answer_list = "(";
-		for (QuizSolveParamVO quizSolveParamVO : param) {
-			my_answer_list += quizSolveParamVO.getMy_answer();
-			my_answer_list += ",";
-		}
-		my_answer_list = my_answer_list.substring(0,my_answer_list.length()-1);
-		my_answer_list += ")";
-		adminMapper.registQuizSolve(my_answer_list);
+		QuizSolveResultVO rv = new QuizSolveResultVO();
+		rv.setCorrect_wrong(correct);
+		rv.setErrorCode(ErrorCode.SUCCESS.getCode());
+		rv.setErrorMessage(ErrorCode.SUCCESS.getKey());
 		
-		ResultVO rv = new ResultVO();
-		
+		return rv;
+	}
+
+	public ResultVO readQuiz(int param) {
+
+		QuizResultVO rv = adminMapper.readQuiz(param);
+		rv.setErrorCode(ErrorCode.SUCCESS.getCode());
+		rv.setErrorMessage(ErrorCode.SUCCESS.getKey());		
 		
 		return rv;
 	}
