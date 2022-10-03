@@ -91,9 +91,6 @@
 	test_category_no,
 	subject_category_no,
 	quiz_content,
-	quiz_explation,
-	quiz_type,
-	quiz_point,
 	option1,
 	option2,
 	option3,
@@ -107,9 +104,6 @@
 	#{test_category_no},
 	#{subject_category_no},
 	#{quiz_content},
-	#{quiz_explation},
-	#{quiz_type},
-	#{quiz_point},
 	#{option1},
 	#{option2},
 	#{option3},
@@ -148,9 +142,6 @@
 		test_category_no,
 		subject_category_no,
 		quiz_content,
-		quiz_explation,
-		quiz_type,
-		quiz_point,
 		option1,
 		option2,
 		option3,
@@ -161,5 +152,42 @@
 	WHERE
 		quiz_no = #{quiz_no}
 	</select>
+	
+	<select id="quizListByTest_no" parameterType="int" resultType="com.quiz.bank.api.admin.vo.QuizParamVO">
+	SELECT
+		quiz_no,
+		quiz_content,
+		option1,
+		option2,
+		option3,
+		option4,
+		option5
+	FROM
+		quiz
+	WHERE
+		test_category_no = #{param1}
+	AND
+		used_yn = true
+	
+	</select>
+	
+	<select id="quizListBySubject_no" parameterType="int" resultType="com.quiz.bank.api.admin.vo.QuizParamVO">
+	SELECT
+		quiz_no,
+		quiz_content,
+		option1,
+		option2,
+		option3,
+		option4,
+		option5,
+		quiz_answer
+	FROM
+		quiz
+	WHERE
+		subject_category_no = #{param1}
+	AND
+		used_yn = true	
+	</select>
+	
 	
 </mapper>

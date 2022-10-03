@@ -111,4 +111,18 @@ public class AdminController extends BaseController {
 		return rv;
 	}
 	
+	
+	@GetMapping(value="quizlist/{category_type}/{category_no}")
+	@ResponseBody
+	public ResultVO quizList(
+			@PathVariable("category_type") String category_type , 
+			@PathVariable("category_no") int category_no) {
+		
+		logger.info("category_type : {},category_no {}",category_type,category_no);
+		
+		ResultVO rv = adminService.quizList(category_type,category_no);
+		
+		return rv;
+	}
+	
 }

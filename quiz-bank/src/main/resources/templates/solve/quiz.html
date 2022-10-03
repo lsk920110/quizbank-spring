@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.rtl.min.css" integrity="sha384-OXTEbYDqaX2ZY/BOaZV/yFGChYHtrXH2nyXJ372n2Y8abBhrqacCEe+3qhSHtLjy" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<style>
+#all{
+	width : 500px;
+}
+</style>
+<body>
+	
+	
+	
+<div id="all">
+	<div class="card">
+	  <h5 id="quiz-content" class="card-header">Featured</h5>
+	  <div class="card-body">
+		<!-- <h5 class="card-title">Special title treatment</h5> -->
+		<!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
+		<ol id="options">
+			
+		</ol>
+		
+		<a href="#" class="btn btn-primary" id="quiz-submit-btn" onclick="quizSubmit()">제출</a>
+	  </div>
+	</div>
+	<script>
+		const thisCategory = location.pathname.split('/')[2];
+		const thisCategoryNo = location.pathname.split('/')[3];
+		let quiz_list;
+		let quiz_cnt = 0;
+		const quizDraw=(quiz_obj)=>{
+			$('#quiz-content').html(quiz_obj.quiz_content);
+			let txt = `
+			<li><input type="radio" value="1" name="options"/>${quiz_obj.option1}</li>
+			<li><input type="radio" value="2" name="options"/>${quiz_obj.option2}</li>
+			<li><input type="radio" value="3" name="options"/>${quiz_obj.option3}</li>
+			<li><input type="radio" value="4" name="options"/>${quiz_obj.option4}</li>
+			<li><input type="radio" value="5" name="options"/>${quiz_obj.option5}</li>
+			`;
+			$('#options').html(txt);
+			$('#quiz-submit-btn').attr('onclick',`quizSubmit(${quiz_obj.quiz_no})`);
+			quiz_cnt += 1;
+		}
+		const quizCall=()=>{
+			$.ajax({
+				url : `/quizlist/${thisCategory}/${thisCategoryNo}`,
+				method : 'GET',
+				dataType : 'json',
+				success : (data)=>{
+					quiz_list = data.quizList;
+					console.log(quiz_list);
+					let quiz_obj = quiz_list[quiz_cnt];
+					quizDraw(quiz_obj);
+				},
+				error : (e)=>{console.log(e)}
+			});
+		}
+		quizCall();
+		const quizSubmit=(quiz_no)=>{
+			let my_answer = $('input[name="options"]:checked').val();
+			console.log(my_answer);
+			param = {quiz_no:quiz_no,my_answer:my_answer};
+			console.log(param);
+			$.ajax({
+				url : '/regist/quiz/solve',
+				method : 'post',
+				data : JSON.stringify(param),
+				dataType : 'json',
+				contentType : 'application/json',
+				success : (data)=>{
+					console.log(data)
+					/** 더이상 없음 */
+					if (data.correct_wrong) {
+						alert('정답입니다!');
+					} else {
+						alert('오답입니다!');
+						//confirm('');
+					}
+
+					if(quiz_list.length == quiz_cnt) {
+						alert('더이상 문제가 없습니다.');
+						location.href='/';
+					}
+					if(quiz_list.length > quiz_cnt) {
+						quizDraw(quiz_list[quiz_cnt]);
+					}
+				},
+				error : (e)=>{console.log(e)}
+
+			});
+		}
+
+
+
+	</script>
+
+
+
+</body>
+<script>
+
+</script>
+
+
+
+
+
+</html>

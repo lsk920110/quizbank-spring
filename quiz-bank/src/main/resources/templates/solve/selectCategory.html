@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.rtl.min.css" integrity="sha384-OXTEbYDqaX2ZY/BOaZV/yFGChYHtrXH2nyXJ372n2Y8abBhrqacCEe+3qhSHtLjy" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<style>
+#all{
+	width : 500px;
+}
+</style>
+<body>
+<div id="all">
+	
+	
+	<select id="test_category_select" onchange="test_category_change(this)" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+	  <option selected>Open this select menu</option>
+	  <option value="1">One</option>
+	  <option value="2">Two</option>
+	  <option value="3">Three</option>
+	</select>
+	
+	<select id="subject_category_select" class="form-select form-select-sm" aria-label=".form-select-sm example">
+	  <option selected value="all">전체</option>
+	</select>
+	<button type="button" onclick="GotoQuiz()" class="btn btn-primary">Go to Quiz!</button>
+	<script>
+		const GotoQuiz=()=>{
+			$test_category_no = $('#test_category_select').val();
+			$subject_category_no = $('#subject_category_select').val();
+			let url = '';
+			if ($subject_category_no === "all") {
+				url = `/solve/test/${$test_category_no}`;
+			} else {
+				url = `/solve/subject/${$subject_category_no}`;
+			}
+			location.href=url;
+		}
+	</script>
+</div>
+
+
+</body>
+<script>
+const test_category_list=()=>{
+	$.ajax({
+		
+		url : '/read/testCategoryList',
+		dataType : 'json',
+		method : 'GET',
+		//data : '',
+		success : (data)=>{
+			testCategoryListDraw(data.test_category_list);
+		},
+		error : (e)=>{console.log(e)}
+		
+	});	
+}
+test_category_list();
+
+const test_category_change=(e)=>{
+	$.ajax({
+		url : `/read/subjectCategoryList/${e.value}`,
+		method : 'GET',
+		success : (data)=>{subjectCategoryListDraw(data.subject_category_list)},
+		error : (e)=>console.log(e)
+	});
+
+}
+
+const testCategoryListDraw=(tcl)=>{
+	let txt = '';
+	tcl.forEach((item,idx)=>{
+		txt += `<option value="${item.test_category_no}">${item.test_category}</option>`;
+	});
+	$('#test_category_select').empty();
+	$('#test_category_select').append(txt);
+}
+
+const subjectCategoryListDraw=(scl)=>{
+	let txt = '<option id="all">전체</option>';
+	scl.forEach((item,idx)=>{
+		txt += `<option value="${item.subject_category_no}">${item.subject_category}</option>`;
+	});
+	$('#subject_category_select').empty();
+	$('#subject_category_select').append(txt);	
+}
+
+
+
+</script>
+
+
+
+
+
+</html>

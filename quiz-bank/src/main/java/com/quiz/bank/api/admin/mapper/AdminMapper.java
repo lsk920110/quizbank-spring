@@ -33,4 +33,8 @@ public interface AdminMapper {
 
 	QuizResultVO readQuiz(int param);
 
+	List<QuizParamVO> quizListByTest_no(int category_no);
+
+	List<QuizParamVO> quizListBySubject_no(int category_no);
+
 }
