@@ -8,14 +8,51 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
 #all{
-	width : 500px;
+	width : 800px;
+  margin :auto;
 }
-
+#content-body{
+  width : 500px;
+  margin-left: 150px;
+  margin-right:150px;
+  margin-top : 150px;
+}
+select , input {
+  height : 50px;
+}
 </style>
 <body>
 
 
 <div id="all">
+  <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">문제풀이 어플</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li> -->
+        <li class="nav-item">
+        <a class="nav-link" href="/regist/category">카테고리</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/regist/quiz">문제등록</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/solve/selectCategory">문제풀기</a>
+        </li>
+      </ul>
+
+      </div>
+    </div>
+    </nav>
+    <div id="content-body">
+      
+
 <fieldset>
 <legend>문제내용,해설,과목,세부과목,몇지선다?,옵션1~5,답</legend>
 
@@ -119,10 +156,15 @@ const subjectCategoryListDraw=(scl)=>{
 		  <input type="text" class="form-control" name="option5" aria-label="Text input with radio button">
 		 </div>
 	</div>
+  <div style=
+  "text-align : center;
+  margin-top: 20px;
+  ">
 	<input type="button" id="regist-quiz-btn" class="btn btn-primary" value="저장"/>
-	
+	</div>
 </form>
 </fieldset>
+</div>  
 </div>
 </body>
 <script>

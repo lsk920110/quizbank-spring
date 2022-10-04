@@ -8,79 +8,117 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
 #all{
-	width : 500px;
+	width : 800px;
+  margin :auto;
+}
+#content-body{
+  width : 500px;
+  margin-left: 150px;
+  margin-right:150px;
+  margin-top : 150px;
+}
+select , input {
+  height : 50px;
 }
 </style>
 <body>
 <div id="all">
-	<div class="input-group mb-3">
-	  <input id="testCategory" type="text" class="form-control" placeholder="시험종류" aria-label="Recipient's username" aria-describedby="button-addon2">
-	  <button class="btn btn-outline-secondary" type="button" id="button-addon2"
-	  onclick="registTestCategory()">시험저장</button>
-	</div>
-	<script>
-	const registTestCategory=()=>{
-		let testCategory = $('#testCategory').val();
-		$.ajax({
-			url :'regist/testCategory',
-			data : JSON.stringify({test_category:testCategory}),
-			method : 'POST',
-			dataType : 'json',
-			contentType : 'application/json',
-			success : (data)=>{
-				console.log(data);
-				let txt = `<option value=${data.test_category_no}>${data.test_category}</option>`;
-				$('#test_category_select').append(txt);
-			}
-			
-			
-		});
-	}
-	</script>
-	
-	<select id="test_category_select" onchange="test_category_change(this)" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-	  <option selected>Open this select menu</option>
-	  <option value="1">One</option>
-	  <option value="2">Two</option>
-	  <option value="3">Three</option>
-	</select>
-	<div class="input-group mb-3">
-	  <input id="subjectCategory" type="text" class="form-control" placeholder="과목종류" aria-label="Recipient's username" aria-describedby="button-addon2">
-	  <button class="btn btn-outline-secondary" type="button" id="button-addon2"
-    onclick="registSubjectCategory()"
-    >과목저장</button>
-	</div>
-	<script>
-	const registSubjectCategory=()=>{
-		let testCategoryNo = $('#test_category_select').val();
-		let subjectCategoryNo = $('#subjectCategory').val();
-		
-		$.ajax({
-			url :'regist/subjectCategory',
-			data : JSON.stringify({
-				test_category_no:testCategoryNo,
-				subject_category:subjectCategoryNo
-			}),
-			method : 'POST',
-			dataType : 'json',
-			contentType : 'application/json',
-			success : (data)=>{
-				console.log(data);
-				let txt = `<option value=${data.subject_category_no}>${data.subject_category}</option>`;
-				$('#subject_category_select').append(txt);
-			}
-			
-			
-		});
-	}
-	</script>
-	<select id="subject_category_select" class="form-select form-select-sm" aria-label=".form-select-sm example">
-	  <option selected>Open this select menu</option>
-	  <option value="1">One</option>
-	  <option value="2">Two</option>
-	  <option value="3">Three</option>
-	</select>
-</div>
+  <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">문제풀이 어플</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li> -->
+        <li class="nav-item">
+        <a class="nav-link" href="/regist/category">카테고리</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/regist/quiz">문제등록</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/solve/selectCategory">문제풀기</a>
+        </li>
+      </ul>
+
+      </div>
+    </div>
+    </nav>
+    <div id="content-body">
+
+      <div class="input-group mb-3">
+        <input id="testCategory" type="text" class="form-control" placeholder="시험종류" aria-label="Recipient's username" aria-describedby="button-addon2">
+        <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+        onclick="registTestCategory()">시험저장</button>
+      </div>
+      <script>
+      const registTestCategory=()=>{
+        let testCategory = $('#testCategory').val();
+        $.ajax({
+          url :'regist/testCategory',
+          data : JSON.stringify({test_category:testCategory}),
+          method : 'POST',
+          dataType : 'json',
+          contentType : 'application/json',
+          success : (data)=>{
+            console.log(data);
+            let txt = `<option value=${data.test_category_no}>${data.test_category}</option>`;
+            $('#test_category_select').append(txt);
+          }
+          
+          
+        });
+      }
+      </script>
+      
+      <select id="test_category_select" onchange="test_category_change(this)" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+        <option selected>Open this select menu</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+      <div class="input-group mb-3">
+        <input id="subjectCategory" type="text" class="form-control" placeholder="과목종류" aria-label="Recipient's username" aria-describedby="button-addon2">
+        <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+        onclick="registSubjectCategory()"
+        >과목저장</button>
+      </div>
+      <script>
+      const registSubjectCategory=()=>{
+        let testCategoryNo = $('#test_category_select').val();
+        let subjectCategoryNo = $('#subjectCategory').val();
+        
+        $.ajax({
+          url :'regist/subjectCategory',
+          data : JSON.stringify({
+            test_category_no:testCategoryNo,
+            subject_category:subjectCategoryNo
+          }),
+          method : 'POST',
+          dataType : 'json',
+          contentType : 'application/json',
+          success : (data)=>{
+            console.log(data);
+            let txt = `<option value=${data.subject_category_no}>${data.subject_category}</option>`;
+            $('#subject_category_select').append(txt);
+          }
+          
+          
+        });
+      }
+      </script>
+      <select id="subject_category_select" class="form-select form-select-sm" aria-label=".form-select-sm example">
+        <option selected>Open this select menu</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </div>
+    </div>
 
 
 </body>

@@ -8,36 +8,44 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
 #all{
-	width : 500px;
+	width : 800px;
+  margin :auto;
+}
+#content-body{
+  width : 500px;
 }
 
 </style>
 <body>
-	<nav class="navbar navbar-expand-lg bg-light">
-		<div class="container-fluid">
-		  <a class="navbar-brand" href="#">문제풀이 어플</a>
-		  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		  </button>
-		  <div class="collapse navbar-collapse" id="navbarText">
-			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-			  <li class="nav-item">
-				<a class="nav-link active" aria-current="page" href="#">Home</a>
-			  </li>
-			  <li class="nav-item">
-				<a class="nav-link" href="regist/category">Regist-Category</a>
-			  </li>
-			  <li class="nav-item">
-				<a class="nav-link" href="regist/quiz">Regist-Quiz</a>
-			  </li>
-			  <li class="nav-item">
-				<a class="nav-link" href="solve/selectCategory">Solve-Quiz</a>
-			  </li>
-			</ul>
+  <div id="all">
+    <nav class="navbar navbar-expand-lg bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">문제풀이 어플</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <!-- <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li> -->
+          <li class="nav-item">
+          <a class="nav-link" href="/regist/category">카테고리</a>
+          </li>
+          <li class="nav-item">
+          <a class="nav-link" href="/regist/quiz">문제등록</a>
+          </li>
+          <li class="nav-item">
+          <a class="nav-link" href="/solve/selectCategory">문제풀기</a>
+          </li>
+        </ul>
+  
+        </div>
+      </div>
+      </nav>
 
-		  </div>
-		</div>
-	  </nav>
+
+  </div>
 
 
 
