@@ -28,6 +28,9 @@ label{
 input[type="radio"]{
   vertical-align:text-top
 }
+a.navbar-brand{
+	font-weight: bold; 
+}
 </style>
 <body>
 	
@@ -76,6 +79,10 @@ input[type="radio"]{
     margin-top: 20px;
     ">
 		<a href="#" class="btn btn-primary" id="quiz-submit-btn" onclick="quizSubmit()">제출</a>
+		<a href="#" class="btn btn-primary" id="quiz-next-btn" onclick="quizNext()">다음→</a>
+	<script>
+		$('#quiz-next-btn').hide();
+	</script>
     </div>
 	  </div>
 	</div>
@@ -128,6 +135,15 @@ input[type="radio"]{
 			});
 		}
 		quizCall();
+		const quizNext=()=>{
+			if(quiz_list.length > quiz_cnt) {
+			quizDraw(quiz_list[quiz_cnt]);
+			}
+			$('#quiz-next-btn').hide();
+			$('#quiz-submit-btn').show();
+		}
+
+
 		const quizSubmit=(quiz_no)=>{
 			let my_answer = $('input[name="options"]:checked').val();
 			console.log(my_answer);
@@ -143,12 +159,15 @@ input[type="radio"]{
 					console.log(data)
 					/** 더이상 없음 */
 					if (data.correct_wrong) {
-            $($(`.list-group-item`)[data.quiz_answer-1]).addClass('active')
+			            $($(`.list-group-item`)[data.quiz_answer-1]).addClass('active')
 						alert('정답입니다!');
+						$('#quiz-next-btn').show();
+						$('#quiz-submit-btn').hide();
 					} else {
 						alert('오답입니다!');
-            $($(`.list-group-item`)[data.quiz_answer-1]).addClass('active')
-
+        			    $($(`.list-group-item`)[data.quiz_answer-1]).addClass('active')
+						$('#quiz-next-btn').show();
+						$('#quiz-submit-btn').hide();
 						//confirm('');
 					}
 
@@ -156,9 +175,7 @@ input[type="radio"]{
 						alert('더이상 문제가 없습니다.');
 						location.href='/';
 					}
-					// if(quiz_list.length > quiz_cnt) {
-					// 	quizDraw(quiz_list[quiz_cnt]);
-					// }
+
 				},
 				error : (e)=>{console.log(e)}
 

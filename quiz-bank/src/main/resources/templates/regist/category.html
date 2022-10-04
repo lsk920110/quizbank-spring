@@ -20,6 +20,18 @@
 select , input {
   height : 50px;
 }
+#testCategory,#subjectCategory{
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+#button-addon1,#button-addon2{
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
 </style>
 <body>
 <div id="all">
@@ -51,8 +63,8 @@ select , input {
     <div id="content-body">
 
       <div class="input-group mb-3">
-        <input id="testCategory" type="text" class="form-control" placeholder="시험종류" aria-label="Recipient's username" aria-describedby="button-addon2">
-        <button class="btn btn-outline-secondary" type="button" id="button-addon2"
+        <input id="testCategory" type="text" class="form-control" placeholder="시험종류" aria-label="Recipient's username" aria-describedby="button-addon1">
+        <button class="btn btn-outline-secondary" type="button" id="button-addon1"
         onclick="registTestCategory()">시험저장</button>
       </div>
       <script>

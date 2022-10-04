@@ -19,8 +19,10 @@
   margin-top : 150px;
 }
 select , input {
-  height : 50px;
+	height : 50px;
+	border-radius: 5px;
 }
+
 </style>
 <body>
 <div id="all">
@@ -51,16 +53,16 @@ select , input {
     </nav>	
 	<div id="content-body">
 
-
-	<select id="test_category_select" onchange="test_category_change(this)" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+	<h3>시험과 세부과목을 선택하세요</h3>
+	<select id="test_category_select" onchange="test_category_change(this)" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example2">
 	  <option selected>Open this select menu</option>
 	  <option value="1">One</option>
 	  <option value="2">Two</option>
 	  <option value="3">Three</option>
 	</select>
 	
-	<select id="subject_category_select" class="form-select form-select-sm" aria-label=".form-select-sm example">
-	  <option selected value="all">전체</option>
+	<select id="subject_category_select" class="form-select form-select-lg mb-3" aria-label=".form-select-sm example3">
+	  <!-- <option selected value="all">전체</option> -->
 	</select>
   <div style=
   "text-align : center;
@@ -72,6 +74,11 @@ select , input {
 		const GotoQuiz=()=>{
 			$test_category_no = $('#test_category_select').val();
 			$subject_category_no = $('#subject_category_select').val();
+			if($test_category_no == "none"){
+				alert('시험을 선택해주세요');
+				return;
+			}
+
 			let url = '';
 			if ($subject_category_no == "all") {
 				url = `/solve/test/${$test_category_no}`;
@@ -104,6 +111,13 @@ const test_category_list=()=>{
 test_category_list();
 
 const test_category_change=(e)=>{
+	console.log(e);
+	if(e.value=="none"){
+		$('#subject_category_select').empty();
+		// $('#subject_category_select').append();	
+		return;
+	}
+
 	$.ajax({
 		url : `/read/subjectCategoryList/${e.value}`,
 		method : 'GET',
@@ -114,7 +128,7 @@ const test_category_change=(e)=>{
 }
 
 const testCategoryListDraw=(tcl)=>{
-	let txt = '';
+	let txt = '<option value="none">선택하세요</option>';
 	tcl.forEach((item,idx)=>{
 		txt += `<option value="${item.test_category_no}">${item.test_category}</option>`;
 	});
