@@ -1,11 +1,12 @@
 CREATE database `study`;
-use study;
 CREATE USER 'study'@'%' IDENTIFIED BY 'pass';
 drop user 'study'@'*';
 GRANT ALL PRIVILEGES ON *.* TO 'study'@'%';
 flush privileges;
+
 drop database study;
 CREATE DATABASE `study` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+use study;
 
 
 
@@ -48,3 +49,4 @@ CREATE TABLE `quiz_solve` (
 	`solve_dt`	datetime,
 	`correct_wrong`	boolean	NULL
 );
+ALTER TABLE quiz_solve AUTO_INCREMENT = 1;

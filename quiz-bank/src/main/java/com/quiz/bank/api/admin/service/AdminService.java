@@ -25,122 +25,117 @@ import com.quiz.bank.common.type.Types;
 import com.quiz.bank.common.vo.ResultVO;
 
 @Service
-public class AdminService extends BaseService{
-	
-	@Autowired AdminMapper adminMapper;
-	
-	public ResultVO registTestCategory(TestCategoryParamVO param) {
-		adminMapper.registTestCategory(param);
-		//ResultVO rv = readTestCategoryList();
-		RegistCategoryResultVO rv = new RegistCategoryResultVO();
-		
-		rv.setTest_category(param.getTest_category());
-		rv.setTest_category_no(param.getTest_category_no());
-		rv.setErrorCode(ErrorCode.SUCCESS.getCode());
-		rv.setErrorMessage(ErrorCode.SUCCESS.getKey());
-		return rv;
-	}
-	
-	public ResultVO registSubjectCategory(SubjectCategoryParamVO param) {
-		adminMapper.registSubjectCategoryList(param);
-		RegistSubjectResultVO rv = new RegistSubjectResultVO();
-		rv.setSubject_category(param.getSubject_category());
-		rv.setSubject_category_no(param.getSubject_category_no());
-		rv.setErrorCode(ErrorCode.SUCCESS.getCode());
-		rv.setErrorMessage(ErrorCode.SUCCESS.getKey());
-		return rv;
-	}
-	
-	public ResultVO readTestCategoryList() {
-		List<TestCategoryParamVO> list = adminMapper.readTestCategoryList();
-		TestCategoryListResultVO rv = new TestCategoryListResultVO();
-		rv.setTest_category_list(list);
-		rv.setErrorCode(ErrorCode.SUCCESS.getCode());
-		rv.setErrorMessage(ErrorCode.SUCCESS.getKey());
-		return rv;
-	}
-	
-	public ResultVO readSubjectCategoryList(int param) {
-		List<SubjectCategoryParamVO> list = adminMapper.readSubjectCategoryList(param);
-		SubjectCategoryListResultVO rv = new SubjectCategoryListResultVO();
+public class AdminService extends BaseService {
 
-		rv.setTest_category_no(param);
-		rv.setSubject_category_list(list);
-		rv.setErrorCode(ErrorCode.SUCCESS.getCode());
-		rv.setErrorMessage(ErrorCode.SUCCESS.getKey());
-		return rv;
-	}
+  @Autowired
+  AdminMapper adminMapper;
 
-	@Deprecated
-	public ResultVO registTest(TestParamVO param) {
+  public ResultVO registTestCategory(TestCategoryParamVO param) {
+    adminMapper.registTestCategory(param);
+    // ResultVO rv = readTestCategoryList();
+    RegistCategoryResultVO rv = new RegistCategoryResultVO();
 
-		adminMapper.registTest(param);
-		TestRegistResultVO rv = new TestRegistResultVO();
-		rv.setErrorCode(ErrorCode.SUCCESS.getCode());
-		rv.setErrorMessage(ErrorCode.SUCCESS.getKey());
-		rv.setTest_no(param.getTest_no());
-		
-		return rv;
-	}
+    rv.setTest_category(param.getTest_category());
+    rv.setTest_category_no(param.getTest_category_no());
+    rv.setErrorCode(ErrorCode.SUCCESS.getCode());
+    rv.setErrorMessage(ErrorCode.SUCCESS.getKey());
+    return rv;
+  }
 
-	public ResultVO registQuiz(QuizParamVO param) {
+  public ResultVO registSubjectCategory(SubjectCategoryParamVO param) {
+    adminMapper.registSubjectCategoryList(param);
+    RegistSubjectResultVO rv = new RegistSubjectResultVO();
+    rv.setSubject_category(param.getSubject_category());
+    rv.setSubject_category_no(param.getSubject_category_no());
+    rv.setErrorCode(ErrorCode.SUCCESS.getCode());
+    rv.setErrorMessage(ErrorCode.SUCCESS.getKey());
+    return rv;
+  }
 
-		adminMapper.registQuiz(param);
+  public ResultVO readTestCategoryList() {
+    List<TestCategoryParamVO> list = adminMapper.readTestCategoryList();
+    TestCategoryListResultVO rv = new TestCategoryListResultVO();
+    rv.setTest_category_list(list);
+    rv.setErrorCode(ErrorCode.SUCCESS.getCode());
+    rv.setErrorMessage(ErrorCode.SUCCESS.getKey());
+    return rv;
+  }
 
-		
-		ResultVO rv = new ResultVO();
-		rv.setErrorCode(ErrorCode.SUCCESS.getCode());
-		rv.setErrorMessage(ErrorCode.SUCCESS.getKey());		
-		
-		return rv;
-	}
+  public ResultVO readSubjectCategoryList(int param) {
+    List<SubjectCategoryParamVO> list = adminMapper.readSubjectCategoryList(param);
+    SubjectCategoryListResultVO rv = new SubjectCategoryListResultVO();
 
+    rv.setTest_category_no(param);
+    rv.setSubject_category_list(list);
+    rv.setErrorCode(ErrorCode.SUCCESS.getCode());
+    rv.setErrorMessage(ErrorCode.SUCCESS.getKey());
+    return rv;
+  }
 
+  @Deprecated
+  public ResultVO registTest(TestParamVO param) {
 
-	public ResultVO registQuizSolve(QuizSolveParamVO param) {
+    adminMapper.registTest(param);
+    TestRegistResultVO rv = new TestRegistResultVO();
+    rv.setErrorCode(ErrorCode.SUCCESS.getCode());
+    rv.setErrorMessage(ErrorCode.SUCCESS.getKey());
+    rv.setTest_no(param.getTest_no());
 
-		String answer = adminMapper.readAnswer(param.getQuiz_no());
+    return rv;
+  }
 
-		boolean correct = param.getMy_answer().equals(answer) ? true : false;
-		param.setCorrect_wrong(correct);
-		//adminMapper.registQuizSolve(param);
-		logger.info("answer : {}, correct : {}",answer,correct);
-		
-		QuizSolveResultVO rv = new QuizSolveResultVO();
-		rv.setCorrect_wrong(correct);
-		rv.setErrorCode(ErrorCode.SUCCESS.getCode());
-		rv.setErrorMessage(ErrorCode.SUCCESS.getKey());
-		
-		return rv;
-	}
+  public ResultVO registQuiz(QuizParamVO param) {
 
-	public ResultVO readQuiz(int param) {
+    adminMapper.registQuiz(param);
 
-		QuizResultVO rv = adminMapper.readQuiz(param);
-		rv.setErrorCode(ErrorCode.SUCCESS.getCode());
-		rv.setErrorMessage(ErrorCode.SUCCESS.getKey());		
-		
-		return rv;
-	}
+    ResultVO rv = new ResultVO();
+    rv.setErrorCode(ErrorCode.SUCCESS.getCode());
+    rv.setErrorMessage(ErrorCode.SUCCESS.getKey());
 
-	public ResultVO quizList(String category_type, int category_no) {
+    return rv;
+  }
 
-		QuizListResultVO rv = new QuizListResultVO();
-		switch (category_type){
-			case Types.TEST:
-				List<QuizParamVO> result1 = adminMapper.quizListByTest_no(category_no);
-				rv.setQuizList(result1);
-			case Types.SUBJECT:
-				List<QuizParamVO> result2 = adminMapper.quizListBySubject_no(category_no);
-				rv.setQuizList(result2);
-		}
-			
-		rv.setErrorCode(ErrorCode.SUCCESS.getCode());
-		rv.setErrorMessage(ErrorCode.SUCCESS.getKey());
-		
-			
-		
-		
-		return rv;
-	}
+  public ResultVO registQuizSolve(QuizSolveParamVO param) {
+
+    String answer = adminMapper.readAnswer(param.getQuiz_no());
+
+    boolean correct = param.getMy_answer().equals(answer) ? true : false;
+    param.setCorrect_wrong(correct);
+    adminMapper.registQuizSolve(param);
+    logger.info("answer : {}, correct : {}", answer, correct);
+
+    QuizSolveResultVO rv = new QuizSolveResultVO();
+    rv.setCorrect_wrong(correct);
+    rv.setErrorCode(ErrorCode.SUCCESS.getCode());
+    rv.setErrorMessage(ErrorCode.SUCCESS.getKey());
+
+    return rv;
+  }
+
+  public ResultVO readQuiz(int param) {
+
+    QuizResultVO rv = adminMapper.readQuiz(param);
+    rv.setErrorCode(ErrorCode.SUCCESS.getCode());
+    rv.setErrorMessage(ErrorCode.SUCCESS.getKey());
+
+    return rv;
+  }
+
+  public ResultVO quizList(String category_type, int category_no) {
+
+    QuizListResultVO rv = new QuizListResultVO();
+    switch (category_type) {
+      case Types.TEST:
+        List<QuizParamVO> result1 = adminMapper.quizListByTest_no(category_no);
+        rv.setQuizList(result1);
+      case Types.SUBJECT:
+        List<QuizParamVO> result2 = adminMapper.quizListBySubject_no(category_no);
+        rv.setQuizList(result2);
+    }
+
+    rv.setErrorCode(ErrorCode.SUCCESS.getCode());
+    rv.setErrorMessage(ErrorCode.SUCCESS.getKey());
+
+    return rv;
+  }
 }
