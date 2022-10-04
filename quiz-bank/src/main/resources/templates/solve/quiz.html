@@ -99,30 +99,7 @@ input[type="radio"]{
         
       };
 
-      console.log(txt);
 
-			// txt = `
-			// <li class="list-group-item">
-      //   <input type="radio" value="1" name="options" id="option1">
-      //   <label class="form-check-label" for="option1">${quiz_obj.option1}</label>
-      // </li>
-      // <li class="list-group-item">
-      //   <input type="radio" value="1" name="options" id="option1">
-      //   <label class="form-check-label" for="option2">${quiz_obj.option2}</label>
-      // </li>
-      // <li class="list-group-item">
-      //   <input type="radio" value="1" name="options" id="option1">
-      //   <label class="form-check-label" for="option3">${quiz_obj.option3}</label>
-      // </li>
-      // <li class="list-group-item">
-      //   <input type="radio" value="1" name="options" id="option1">
-      //   <label class="form-check-label" for="option4">${quiz_obj.option4}</label>
-      // </li>
-      // <li class="list-group-item">
-      //   <input type="radio" value="1" name="options" id="option1">
-      //   <label class="form-check-label" for="option5">${quiz_obj.option5}</label>
-      // </li>
-			// `;
 			$('#options').html(txt);
       $('.list-group-item').click((e)=>{
         $(e.currentTarget).children('input').prop('checked',true);
@@ -166,9 +143,12 @@ input[type="radio"]{
 					console.log(data)
 					/** 더이상 없음 */
 					if (data.correct_wrong) {
+            $($(`.list-group-item`)[data.quiz_answer-1]).addClass('active')
 						alert('정답입니다!');
 					} else {
 						alert('오답입니다!');
+            $($(`.list-group-item`)[data.quiz_answer-1]).addClass('active')
+
 						//confirm('');
 					}
 
@@ -176,9 +156,9 @@ input[type="radio"]{
 						alert('더이상 문제가 없습니다.');
 						location.href='/';
 					}
-					if(quiz_list.length > quiz_cnt) {
-						quizDraw(quiz_list[quiz_cnt]);
-					}
+					// if(quiz_list.length > quiz_cnt) {
+					// 	quizDraw(quiz_list[quiz_cnt]);
+					// }
 				},
 				error : (e)=>{console.log(e)}
 

@@ -105,6 +105,7 @@ public class AdminService extends BaseService {
     logger.info("answer : {}, correct : {}", answer, correct);
 
     QuizSolveResultVO rv = new QuizSolveResultVO();
+    rv.setQuiz_answer(answer);
     rv.setCorrect_wrong(correct);
     rv.setErrorCode(ErrorCode.SUCCESS.getCode());
     rv.setErrorMessage(ErrorCode.SUCCESS.getKey());
