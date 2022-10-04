@@ -73,7 +73,7 @@ select , input {
 			$test_category_no = $('#test_category_select').val();
 			$subject_category_no = $('#subject_category_select').val();
 			let url = '';
-			if ($subject_category_no === "all") {
+			if ($subject_category_no == "all") {
 				url = `/solve/test/${$test_category_no}`;
 			} else {
 				url = `/solve/subject/${$subject_category_no}`;
@@ -123,7 +123,7 @@ const testCategoryListDraw=(tcl)=>{
 }
 
 const subjectCategoryListDraw=(scl)=>{
-	let txt = '<option id="all">전체</option>';
+	let txt = '<option value="all">전체</option>';
 	scl.forEach((item,idx)=>{
 		txt += `<option value="${item.subject_category_no}">${item.subject_category}</option>`;
 	});

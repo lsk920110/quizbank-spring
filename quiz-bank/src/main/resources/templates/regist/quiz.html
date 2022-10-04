@@ -58,14 +58,12 @@ select , input {
 
 <form>
 <select id="test_category_select" name="test_category_no" onchange="test_category_change(this)" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-  <option selected>Open this select menu</option>
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
+  <option value=""></option>
+
 </select>
 <script>
 const testCategoryListDraw=(tcl)=>{
-	let txt = '';
+	let txt = '<option value="">선택하세요</option>';
 	tcl.forEach((item,idx)=>{
 		txt += `<option value="${item.test_category_no}">${item.test_category}</option>`;
 	});
@@ -76,7 +74,7 @@ const testCategoryListDraw=(tcl)=>{
 const test_category_list=()=>{
 	$.ajax({
 		
-		url : 'read/testCategoryList',
+		url : '/read/testCategoryList',
 		dataType : 'json',
 		method : 'GET',
 		//data : '',
@@ -92,15 +90,13 @@ test_category_list();
 
 
 <select id="subject_category_select" name="subject_category_no" class="form-select form-select-sm" aria-label=".form-select-sm example">
-  <option selected>Open this select menu</option>
-  <option value="1">One</option>
-  <option value="2">Two</option>
-  <option value="3">Three</option>
+  <option selected value=""></option>
+
 </select>
 <script>
 const test_category_change=(e)=>{
 	$.ajax({
-		url : `read/subjectCategoryList/${e.value}`,
+		url : `/read/subjectCategoryList/${e.value}`,
 		method : 'GET',
 		success : (data)=>{subjectCategoryListDraw(data.subject_category_list)},
 		error : (e)=>console.log(e)
@@ -174,14 +170,54 @@ $('#regist-quiz-btn').click(()=>{
 	form_data.forEach((item,idx)=>{
 		param[item.name] = item.value;
 	});
-	console.log(param);
+  if(param.test_category_no == '') {
+    alert('시험을 선택하세요');
+    return;
+  }
+  if(param.subject_category_no == '') {
+    alert('과목을 선택하세요');
+    return;
+  }
+  if(param.quiz_content == ''){
+    alert('문제를 입력하세요');
+    return;
+  }
+  if(
+      param.option1 == ''
+    ||param.option2 == ''
+    ||param.option3 == ''
+    ||param.option4 == ''
+    ||param.option5 == ''    
+  ) {
+    alert('보기를 입력하세요');
+    return;
+  }
+  if(!param.hasOwnProperty('quiz_answer')) {
+    alert('답을 입력하세요');
+    return;
+  }
+
+
+  console.log(param);
  	$.ajax({
-		url : 'regist/quiz',
+		url : '/regist/quiz',
 		method : 'POST',
 		dataType : 'json',
 		data : JSON.stringify(param),
 		contentType : 'application/json',
-		success : (data)=>{console.log(data)},
+		success : (data)=>{
+      console.log(data);
+      if(data.errorCode == '0000'){
+        alert('문제가 등록되었습니다.');
+      } else{
+        alert('등록을 실패했습니다');
+        return;
+      }
+      $('textarea').val('');
+      $('input[type="text"]').val('');
+    
+    
+    },
 		error : (e)=>{console.log(e)}
 	});
 });
