@@ -47,17 +47,19 @@
 
       <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
       <div class="container">
-        <canvas id="myChart">asd</canvas>
+        통계 1 : 최근 5일동안 추가된 문제들
+        통계 2 : 시험별오답률
+        <canvas id="registQuizFiveDays"></canvas>
       </div>
       <script>
-    var ctx = document.getElementById('myChart');
+    var ctx = document.getElementById('registQuizFiveDays');
     var myChart = new Chart(ctx, {
       type: 'bar',
       data: {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
         datasets: [{
-          label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
+          label: '최근 5일 추가된 문제',
+          data: [12, 25, 3, 5, 2, 3],
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
@@ -87,11 +89,53 @@
         }
       }
     });
-
-
       </script>
 
-      </div>
+<div class="container">
+
+  <canvas id="weongAnswerRate"></canvas>
+</div>
+<script>
+var ctx = document.getElementById('weongAnswerRate');
+var myChart = new Chart(ctx, {
+type: 'bar',
+data: {
+  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+  datasets: [{
+    label: '시험별오답률',
+    data: [12, 25, 3, 5, 2, 3],
+    backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(255, 206, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(255, 159, 64, 0.2)'
+    ],
+    borderColor: [
+      'rgba(255, 99, 132, 1)',
+      'rgba(54, 162, 235, 1)',
+      'rgba(255, 206, 86, 1)',
+      'rgba(75, 192, 192, 1)',
+      'rgba(153, 102, 255, 1)',
+      'rgba(255, 159, 64, 1)'
+    ],
+    borderWidth: 1
+  }]
+},
+options: {
+  scales: {
+    yAxes: [{
+      ticks: {
+        beginAtZero: true
+      }
+    }]
+  }
+}
+});
+</script>
+      
+</div>
 
   </div>
 
