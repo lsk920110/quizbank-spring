@@ -161,13 +161,17 @@
 		option2,
 		option3,
 		option4,
-		option5
+		option5,
+		test_category,
+		subject_category
 	FROM
-		quiz
+		quiz q
+  LEFT JOIN test_category  tcn USING (test_category_no)
+	LEFT JOIN subject_category scn USING (subject_category_no)
 	WHERE
-		test_category_no = #{param1}
+		q.test_category_no = #{param1}
 	AND
-		used_yn = true
+		q.used_yn = true
 	
 	</select>
 	
@@ -180,13 +184,17 @@
 		option3,
 		option4,
 		option5,
-		quiz_answer
+		quiz_answer,
+		test_category,
+		subject_category
 	FROM
-		quiz
+		quiz q
+  LEFT JOIN test_category  tcn USING (test_category_no)
+	LEFT JOIN subject_category scn USING (subject_category_no)
 	WHERE
 		subject_category_no = #{param1}
 	AND
-		used_yn = true	
+		q.used_yn = true	
 	</select>
 	
 	

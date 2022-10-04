@@ -128,9 +128,11 @@ public class AdminService extends BaseService {
       case Types.TEST:
         List<QuizParamVO> result1 = adminMapper.quizListByTest_no(category_no);
         rv.setQuizList(result1);
+        break;
       case Types.SUBJECT:
         List<QuizParamVO> result2 = adminMapper.quizListBySubject_no(category_no);
         rv.setQuizList(result2);
+        break;
     }
 
     rv.setErrorCode(ErrorCode.SUCCESS.getCode());

@@ -20,6 +20,7 @@
 select , input {
   height : 50px;
 }
+
 </style>
 <body>
 
@@ -54,7 +55,7 @@ select , input {
       
 
 <fieldset>
-<legend>문제내용,해설,과목,세부과목,몇지선다?,옵션1~5,답</legend>
+<legend>문제등록</legend>
 
 <form>
 <select id="test_category_select" name="test_category_no" onchange="test_category_change(this)" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
@@ -115,7 +116,22 @@ const subjectCategoryListDraw=(scl)=>{
 </script>
 
 
+<style>
+#option-group .input-group-text{
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+#option-group .form-control{
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
 
+
+</style>
 <div class="form-floating">
   <textarea class="form-control" name="quiz_content" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
   <label for="floatingTextarea2">content</label>
