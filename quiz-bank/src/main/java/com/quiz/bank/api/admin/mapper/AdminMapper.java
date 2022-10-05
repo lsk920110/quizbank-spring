@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.quiz.bank.api.admin.vo.MainStatisticTestCRVO;
 import com.quiz.bank.api.admin.vo.QuizParamVO;
 import com.quiz.bank.api.admin.vo.QuizResultVO;
 import com.quiz.bank.api.admin.vo.QuizSolveParamVO;
@@ -14,27 +15,28 @@ import com.quiz.bank.api.admin.vo.TestParamVO;
 @Mapper
 public interface AdminMapper {
 
-	void registTestCategory(TestCategoryParamVO param);
+  void registTestCategory(TestCategoryParamVO param);
 
-	void registSubjectCategoryList(SubjectCategoryParamVO param);
+  void registSubjectCategoryList(SubjectCategoryParamVO param);
 
-	List<TestCategoryParamVO> readTestCategoryList();
+  List<TestCategoryParamVO> readTestCategoryList();
 
-	List<SubjectCategoryParamVO> readSubjectCategoryList(int param);
+  List<SubjectCategoryParamVO> readSubjectCategoryList(int param);
 
-	void registTest(TestParamVO param);
+  void registTest(TestParamVO param);
 
-	void registQuiz(QuizParamVO quizParamVO);
+  void registQuiz(QuizParamVO quizParamVO);
 
+  String readAnswer(int quiz_no);
 
-	String readAnswer(int quiz_no);
+  void registQuizSolve(QuizSolveParamVO param);
 
-	void registQuizSolve(QuizSolveParamVO param);
+  QuizResultVO readQuiz(int param);
 
-	QuizResultVO readQuiz(int param);
+  List<QuizParamVO> quizListByTest_no(int category_no);
 
-	List<QuizParamVO> quizListByTest_no(int category_no);
+  List<QuizParamVO> quizListBySubject_no(int category_no);
 
-	List<QuizParamVO> quizListBySubject_no(int category_no);
+  List<MainStatisticTestCRVO> MainStatisticTestCR();
 
 }

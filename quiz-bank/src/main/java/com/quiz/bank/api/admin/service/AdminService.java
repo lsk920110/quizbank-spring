@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.quiz.bank.api.admin.mapper.AdminMapper;
+import com.quiz.bank.api.admin.vo.MainStatisticTestCRVO;
+import com.quiz.bank.api.admin.vo.MainStatisticTestResultVO;
 import com.quiz.bank.api.admin.vo.QuizListResultVO;
 import com.quiz.bank.api.admin.vo.QuizParamVO;
 import com.quiz.bank.api.admin.vo.QuizResultVO;
@@ -139,6 +141,15 @@ public class AdminService extends BaseService {
     rv.setErrorCode(ErrorCode.SUCCESS.getCode());
     rv.setErrorMessage(ErrorCode.SUCCESS.getKey());
 
+    return rv;
+  }
+
+  public ResultVO MainStatisticTestCR() {
+    List<MainStatisticTestCRVO> result_list = adminMapper.MainStatisticTestCR();
+    MainStatisticTestResultVO rv = new MainStatisticTestResultVO();
+    rv.setList(result_list);
+    rv.setErrorCode(ErrorCode.SUCCESS.getCode());
+    rv.setErrorMessage(ErrorCode.SUCCESS.getKey());
     return rv;
   }
 }

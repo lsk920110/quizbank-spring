@@ -52,46 +52,67 @@
         <canvas id="registQuizFiveDays"></canvas>
       </div>
       <script>
-    var ctx = document.getElementById('registQuizFiveDays');
-    var myChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-          label: '최근 5일 추가된 문제',
-          data: [12, 25, 3, 5, 2, 3],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
+        let labels_1 = [];
+        let data_1 = [];
+        $.ajax({
+          url : '/StatisticTestCR',
+          method : 'GET',
+          dataType : 'json',
+          success : (data)=>{
+            console.log(data);
+            data.list.forEach((item,idx)=>{
+              labels_1.push(item.test_category);
+              data_1.push(item.correct_wrong_per * 100);
+              draw_1(labels_1,data_1);
+            });
+          
+          },
+          error : (e)=>{console.log(e)}
+        });
+
+      const draw_1=(label_array,data_array)=>{
+        var ctx = document.getElementById('registQuizFiveDays');
+        var myChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: label_array,
+            datasets: [{
+              label: '시험오답률',
+              data: data_array,
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true
+                }
+              }]
             }
-          }]
-        }
+          }
+        });
+
       }
-    });
       </script>
 
-<div class="container">
+<!-- <div class="container">
 
   <canvas id="weongAnswerRate"></canvas>
 </div>
@@ -135,7 +156,7 @@ options: {
 });
 </script>
       
-</div>
+</div> -->
 
   </div>
 

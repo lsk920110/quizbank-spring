@@ -197,5 +197,17 @@
 		q.used_yn = true	
 	</select>
 	
-	
+	<select id="MainStatisticTestCR" resultType="com.quiz.bank.api.admin.vo.MainStatisticTestCRVO">
+  SELECT 
+    test_category_no,
+    test_category,
+    sum(CORRECT_WRONG)/count(CORRECT_WRONG) AS correct_wrong_per 
+  FROM QUIZ_SOLVE QS 
+  LEFT JOIN quiz USING (quiz_no)
+  LEFT JOIN test_category USING (test_category_no)
+  GROUP BY test_category_no
+  </select>
+
+
+
 </mapper>
