@@ -8,8 +8,10 @@ drop database study;
 CREATE DATABASE `study` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 use study;
 
-
-
+alter table quiz convert to charset utf8;
+alter table quiz_solve  convert to charset utf8;
+alter table test_category convert to charset utf8;
+alter table subject_category convert to charset utf8;
 CREATE TABLE `quiz` (
 	`quiz_no`	int(50)	primary key auto_increment,
 	`test_category_no`	int(50)	NOT NULL,
