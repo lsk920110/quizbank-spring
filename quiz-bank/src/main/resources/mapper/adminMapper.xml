@@ -202,7 +202,7 @@
     test_category_no,
     test_category,
     sum(CORRECT_WRONG)/count(CORRECT_WRONG) AS correct_wrong_per 
-  FROM QUIZ_SOLVE QS 
+  FROM quiz_solve QS 
   LEFT JOIN quiz USING (quiz_no)
   LEFT JOIN test_category USING (test_category_no)
   GROUP BY test_category_no
